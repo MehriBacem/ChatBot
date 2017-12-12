@@ -1,0 +1,20 @@
+service: lambda-function
+
+provider:
+  name: aws
+  runtime: nodejs6.10
+  profile: custom-profile
+ 
+functions:
+  ChatBot:
+    handler: handler.ChatBot
+    events:
+     - http:
+         path: /webhook
+         method: GET   
+         integration: lambda
+
+     - http:
+         path: /webhook
+         method: POST   
+         integration: lambda
