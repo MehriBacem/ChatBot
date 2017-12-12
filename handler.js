@@ -3,14 +3,14 @@ var VERIFY_TOKEN = "bacem";
 var https = require('https');
 var PAGE_ACCESS_TOKEN = "EAAHXCZCScr1MBADvIcE4o7beSmkSmtqdk3DXz7S8RsQ5BFMZC0rLSLsJS9UFFXe5XT1RSpwzrn0LySNaPSx7TQxq6biCTAtkBSb3Wm9SYotNCd6cHkGcJCGlp3GcVYvxWq6NchoqoBnfbNjkUcpAjSWJTKoHaY3IU6AsIBAqtVsHquxwP5";
 module.exports.ChatBot = (event, context, callback) => {
-    
+
   // process GET request to check our endpoint during configuration.
   if(event.method === 'GET'){
-  
-  if(event.query){
-  
-    var VerifyToken = event.query['hub.verify_token'] 
- 
+
+    if(event.query){
+
+      var VerifyToken = event.query['hub.verify_token'] 
+
     if (VerifyToken === VERIFY_TOKEN) {  // verify that the hub.verify_token matches the value provided when activating the Webhook. This is a security measure to authenticate the request and identify the Webhook.
       var challenge = event.query['hub.challenge']  // a random string
       
@@ -18,14 +18,14 @@ module.exports.ChatBot = (event, context, callback) => {
     }else{
 
      callback(null, 'Error, wrong validation token' );
-    }
-  
-  
-  }
-    }else{
+   }
+
+
+ }
+} else{
         // process POST request 
         if(event.method === 'POST'){
-    var data =event.body;  
+          var data =event.body;  
     // Make sure this is a page subscription
     if (data.object === 'page') {
     // Iterate over each entry 
@@ -40,12 +40,13 @@ module.exports.ChatBot = (event, context, callback) => {
             console.log("Webhook received unknown event: ", event);
           }
         });
-    });
+      });
     
-    }
+  }
     // if all went well. 
     callback(null, 'ok');
-  }}
+  }
+}
 }
 
 
@@ -60,14 +61,16 @@ function receivedMessage(event) {
     // If we receive a text message, just echo the text we received.
     if (messageText) {
 
-        sendTextMessage(senderID, messageText);
+      sendTextMessage(senderID, messageText);
     }
   } else if (messageAttachments) {
-        // If we receive an attachement, we respond by the same attachement.
-     
-    var attachment_url = messageAttachments[0].payload.url;
-     sendTextMessage(senderID, attachment_url );
-}}
+        // If we receive an attachement, we respond by an url of the same  attachement.
+
+        var attachment_url = messageAttachments[0].payload.url;
+        sendTextMessage(senderID, attachment_url );
+      }
+}
+
 
 //This  function will echo the text we received.
 function sendTextMessage(recipientId, messageText) {
@@ -95,7 +98,7 @@ function sendTextMessage(recipientId, messageText) {
       str += chunk;
     });
     response.on('end', function () {
- 
+
     });
   }
   // Send the HTTP request to the Messenger Platform
@@ -104,7 +107,7 @@ function sendTextMessage(recipientId, messageText) {
   req.on('error', function(e) {
     console.log('problem with request: '+ e);
   });
- 
+
   req.write(body);
   req.end();
 }
