@@ -16,12 +16,11 @@ module.exports.ChatBot = (event, context, callback) => {
       
       callback(null, parseInt(challenge)); // We will know that our endpoint is correctly configured and that the answer is authentic.
     }else{
+      callback(null,'you messed up! , Wrong Token' );
+    }
 
-     callback(null, 'Error, wrong validation token' );
-   }
 
-
- }
+  }
 } else{
         // process POST request 
         if(event.method === 'POST'){
@@ -35,24 +34,24 @@ module.exports.ChatBot = (event, context, callback) => {
         // Iterate over each messaging event
         entry.messaging.forEach(function(msg) {
           if (msg.message) { 
-            receivedMessage(msg);
+            
+            receivedMessage(msg,callback) ;
           } else {
-            console.log("Webhook received unknown event: ", event);
+
+            callback(null, "Webhook received unknown event: "+ event);
           }
         });
       });
     
   }
-    // if all went well. 
-    callback(null, 'ok');
-  }
-}
-}
-
-
-function receivedMessage(event) {
-  console.log("Message data: ", event.message);
   
+}
+}
+}
+
+
+function receivedMessage(event,callback) {
+
   var senderID = event.sender.id;
   var message = event.message;
   var messageText = message.text;
@@ -60,16 +59,19 @@ function receivedMessage(event) {
   if (messageText) {
     // If we receive a text message, just echo the text we received.
     if (messageText) {
-
       sendTextMessage(senderID, messageText);
+      callback(null,messageText) ;
+      
     }
   } else if (messageAttachments) {
         // If we receive an attachement, we respond by an url of the same  attachement.
 
         var attachment_url = messageAttachments[0].payload.url;
         sendTextMessage(senderID, attachment_url );
+        callback(null,attachment_url) ;
+        
       }
-}
+    }
 
 
 //This  function will echo the text we received.
@@ -110,5 +112,7 @@ function sendTextMessage(recipientId, messageText) {
 
   req.write(body);
   req.end();
+
+  
 }
 
