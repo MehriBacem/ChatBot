@@ -13,6 +13,13 @@ This project is a Facebook Messanger chatbot to echo what the users has typed us
 - AWS Lambda
 - Node JS
 
+# Tests
+The tests are implemented with the Framework Jasmine.
+- Unit Tests :  to verify the lambda function.
+- Integration Tests : to verify integrations with API Gateway are working correctly.
+To run tests : npm test 
+
+
 # Authors
 * Jonathan Tse
 * Bacem Mehri
