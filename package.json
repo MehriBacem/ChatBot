@@ -4,7 +4,7 @@
   "description": "test jasmine",
   "main": "index.js",
   "scripts": {
-    "test": "jasmine-node unit-spec.js --verbose && serverless deploy --stage prod"
+    "test": "jasmine-node unit-spec.js --verbose && serverless deploy --stage prod && jasmine-node integration-spec.js --verbose"
     },
     "author": "",
     "license": "ISC",
