@@ -2,7 +2,6 @@ service: lambda-function
 
 provider:
   name: aws
-  role: arn:aws:iam::107673481253:role/Lambda_RDS
   runtime: nodejs6.10
   region: 'us-east-1'
   vpc:
