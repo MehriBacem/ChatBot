@@ -1,6 +1,7 @@
 'use strict';
 var VERIFY_TOKEN = "bacem";
 var https = require('https');
+var mysql= require('mysql');
 var PAGE_ACCESS_TOKEN = "EAAHXCZCScr1MBADvIcE4o7beSmkSmtqdk3DXz7S8RsQ5BFMZC0rLSLsJS9UFFXe5XT1RSpwzrn0LySNaPSx7TQxq6biCTAtkBSb3Wm9SYotNCd6cHkGcJCGlp3GcVYvxWq6NchoqoBnfbNjkUcpAjSWJTKoHaY3IU6AsIBAqtVsHquxwP5";
 module.exports.ChatBot = (event, context, callback) => {
 
@@ -115,4 +116,56 @@ function sendTextMessage(recipientId, messageText) {
 
   
 }
+
+
+
+  
+module.exports.DB = (event, context, callback) => {
+  
+const connection = mysql.createConnection({
+  host     : "ls118lgqhoihsh5.cjng3cg4xp6l.us-east-1.rds.amazonaws.com",
+  user     : "bacem",
+  password : "dictionnaire",
+  database : "Emojis"
+  
+})
+/* Initialization part ends here */
+  context.callbackWaitsForEmptyEventLoop = false;
+
+  const  table= 'DROP Table IF exists Persons; ';
+   connection.query(table, function (error, results, fields) {
+    if (error) {
+      return callback(error)
+    }
+    });
+  const table2=  'CREATE table Persons(a int, b varchar(64));'
+  connection.query(table2, function (error, results, fields) {
+    if (error) {
+      return callback(error)
+    }
+    });
+  const sql1 = 'insert into Persons values(5, "😐");';
+  connection.query(sql1, function (error, results, fields) {
+    if (error) {
+      return callback(error)
+    }
+    });
+
+      const sql2= 'insert into Persons values(6,"😍");';
+     connection.query(sql2, function (error, results, fields) {
+    if (error) {
+      return callback(error)
+    }
+    });
+  
+   const sql3 = 'select * from Persons;';
+  connection.query(sql3, function (error, results, fields) {
+    if (error) {
+      return callback(error)
+    }
+    callback(null,results)
+  });
+
+};
+
 
