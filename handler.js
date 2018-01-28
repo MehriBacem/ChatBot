@@ -125,7 +125,7 @@ module.exports.DB = (event, context, callback) => {
 const connection = mysql.createConnection({
   host     : "RDS Endpoint",
   user     : "bacem",
-  password : "dictionnaire",
+  password : "bacem",
   database : "Emojis"
   
 })
