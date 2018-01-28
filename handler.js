@@ -123,7 +123,7 @@ function sendTextMessage(recipientId, messageText) {
 module.exports.DB = (event, context, callback) => {
   
 const connection = mysql.createConnection({
-  host     : "ls118lgqhoihsh5.cjng3cg4xp6l.us-east-1.rds.amazonaws.com",
+  host     : "RDS Endpoint",
   user     : "bacem",
   password : "dictionnaire",
   database : "Emojis"
